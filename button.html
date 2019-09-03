@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Button document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="container">
+        <h1>{{ titulo }}</h1>
+
+        <section class="my-4">
+          <btn-component></btn-component>
+        </section>
+
+        <jumbotron-component></jumbotron-component>
+      </section>
+    </div>
+
+    <template id="btn">
+      <button type="button" class="btn" v-bind:class="[name]" @click.stop.prevent="emitClick()">{{ text }}</button>
+    </template>
+
+    <template id="jumbo">
+      <div class="jumbotron">
+        <h1 class="display-4">Hello, world!</h1>
+
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+          featured content or information.</p>
+        
+        <hr class="my-4">
+
+        <text-component></text-component>
+
+        <btn-component :text="description" :name="className" @emit-click="test"></btn-component>
+      </div>
+    </template>
+
+    <template id="text">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias magni
+        placeat excepturi, amet possimus reiciendis odit voluptatibus accusamus
+        distinctio corrupti quisquam quasi!
+      </p>
+    </template>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+      Vue.component("btn-component", {
+        template: "#btn",
+        props: {
+          text: {
+            type: String,
+            default: 'Primary'
+          },
+          name: {
+            type: String | Array,
+            default: 'btn-primary'
+          }
+        },
+        methods: {
+          emitClick() {
+            this.$emit('emit-click');
+          }
+        }
+      });
+
+      Vue.component("text-component", {
+        template: "#text"
+      });
+
+      Vue.component("jumbotron-component", {
+        template: "#jumbo",
+        data() {
+          return {
+            description: 'Send',
+            className: 'btn-info',
+          }
+        },
+        methods: {
+          test() {
+            alert(this.className);
+            document.querySelector('h1').style.color = "#ff0000";
+          }
+        }
+      });
+
+      var app = new Vue({
+        el: "#app",
+        data: {
+          titulo: "Button"
+        }
+      })
+    </script>
+  </body>
+</html>
