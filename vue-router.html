@@ -30,8 +30,8 @@
           <h2> Página A </h2>
           
           <ul>
-            <li v-for="item in 1">
-              <router-link :to="{ name: 'goPageAContent', params: { name: 'minha-subrota' } }"> {{ item }} </router-link>
+            <li v-for="item in menuItems">
+              <router-link :to="{ name: 'goPageAContent', params: { name: item.slug } }"> {{ item.name }} </router-link>
             </li>
           </ul>
         </div>
@@ -54,7 +54,18 @@
 
 
     <template id="pageAContent">
-      <h3> Hello! - Page A content </h3>
+      <div class="row">
+        <h3> Hello! - Page A content </h3>
+    
+        <h4> {{ $route.params.name }} </h4>
+
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci dol
+          oremque maxime sequi, quibusdam qui corrupti culpa error necessitatibu
+          s quisquam earum praesentium, dolor similique laborum sint eaque, volu
+          ptate sit at odio!
+        </p>
+      </div>
     </template>
 
     <script src="https://unpkg.com/vue"></script>
@@ -62,7 +73,17 @@
 
     <script>
       var PageA = Vue.component('pageA-component', {
-        template: '#pageA'
+        template: '#pageA',
+        data() {
+          return {
+            menuItems: [
+              { name: 'Link A 1', slug: 'Link A 1' },
+              { name: 'Link A 2', slug: 'Link A 2' },
+              { name: 'Link A 3', slug: 'Link A 3' },
+              { name: 'Link A 4', slug: 'Link A 4' }
+            ]
+          }
+        }
       });
 
       var PageB = Vue.component('pageB-component', {
